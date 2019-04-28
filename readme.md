@@ -14,7 +14,6 @@ That said, after you've cloned the repo here's some initial steps:
 
 
 ## Proposed Git Rules:
-* I protected master and develop branches.  Merge to master requires 2 reviewers.  Merge to develop requires 1 reviewer.
 * Name your branch with something descriptive and include your name or initials in the branch name (e.g. signInScreen-neota or notifications-carla)
 * For now, let's keep the remote branches indefinitely.  We can delete them in the future.  They may be helpful as people get started as an easier way to review past states.
 
