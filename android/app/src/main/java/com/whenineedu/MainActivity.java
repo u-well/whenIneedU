@@ -2,7 +2,7 @@ package com.whenineedu;
 
 import com.facebook.react.ReactActivity;
 
-public class MainActivity extends ReactActivity {
+public class MainActivity extends com.reactnativenavigation.NavigationActivity {
 
     /**
      * Returns the name of the main component registered from JavaScript.
