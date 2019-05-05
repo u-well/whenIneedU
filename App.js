@@ -5,32 +5,6 @@ import {Navigation} from 'react-native-navigation';
 import Help from './src/screens/Help/Help';
 import Distraction from './src/screens/Distraction/Distraction';
 
-// type Props = {};
-// export default class App extends Component<Props> {
-//   render() {
-//     setRoot()
-//     return (
-//       <View style={styles.container}>
-//         <Text style={styles.welcome}>whenIneedU</Text>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-// });
-
 Navigation.registerComponent('whenIneedU.Distraction', () => Distraction);
 Navigation.registerComponent('whenIneedU.Help', () => Help);
 
@@ -56,7 +30,7 @@ const setRoot = () => {
                 }],
                 options: {
                   bottomTab: {
-                    text: 'Tab 1',
+                    text: 'Distract Me',
                     testID: 'FIRST_TAB_BAR_BUTTON',
                     icon: require("./src/assets/images/icon.png")
                   }
@@ -71,11 +45,16 @@ const setRoot = () => {
                   text: 'This is tab 2'
                 },
                 options: {
+                  topBar: {
+                    title: {
+                      text: 'Help!'
+                    }
+                  },
                   bottomTab: {
-                    text: 'Tab 2',
+                    text: 'I need U',
                     testID: 'SECOND_TAB_BAR_BUTTON',
                     icon: require("./src/assets/images/icon.png")
-                  }
+                  },
                 }
               }
             }]

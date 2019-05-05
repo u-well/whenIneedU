@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 
 class HelpScreen extends Component {
     state = {
@@ -8,9 +8,11 @@ class HelpScreen extends Component {
     render () {
 
         return (                
-            <View>
-                <Text>This is the Help Screen.</Text>
-            </View>
+            <SafeAreaView>
+                <View>
+                    <Text>This is the Help Screen.</Text>
+                </View>
+            </SafeAreaView>
         );
     }
 }
