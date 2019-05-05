@@ -12,32 +12,51 @@ Navigation.events().registerAppLaunchedListener(() => {
   setRoot();
 });
 
+Navigation.setDefaultOptions({
+  options: {
+    topBar: {
+      title: {
+        text: 'whenIneedU'
+      }
+    }
+  }
+});
+
 const setRoot = () => {
-      Navigation.setRoot({
-        root: {
-          bottomTabs: {
-            id: 'BottomTabsId',
+  Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        id: 'BottomTabsId',
+        children: [{
+          stack: {
             children: [{
-              stack: {
-                children: [{
-                  component: {
-                    id: 'distraction',
-                    name: 'whenIneedU.Distraction',
-                    passProps: {
-                      text: 'This is tab 1'
-                    }
-                  }
-                }],
+              component: {
+                id: 'distraction',
+                name: 'whenIneedU.Distraction',
+                passProps: {
+                  text: 'This is tab 1'
+                },
                 options: {
-                  bottomTab: {
-                    text: 'Distract Me',
-                    testID: 'FIRST_TAB_BAR_BUTTON',
-                    icon: require("./src/assets/images/icon.png")
+                  topBar: {
+                    title: {
+                      text: 'Distract Me!'
+                    }
                   }
                 }
               }
-            },
-            {
+            }],
+            options: {
+              bottomTab: {
+                text: 'Distract Me',
+                testID: 'FIRST_TAB_BAR_BUTTON',
+                icon: require("./src/assets/images/icon.png")
+              },
+            }
+          }
+        },
+        {
+          stack: {
+            children: [{
               component: {
                 id: 'help',
                 name: 'whenIneedU.Help',
@@ -58,9 +77,11 @@ const setRoot = () => {
                 }
               }
             }]
-          }
-        }
-      })
+          } // end stack 2
+        }]
+      }
+    }
+  })
 }
 
 export default setRoot;
