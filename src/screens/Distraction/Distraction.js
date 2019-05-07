@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {SectionList, View, Text, StyleSheet} from 'react-native';
+import ListItem from '../../components/ListItem/ListItem';
 
 class DistractionScreen extends Component {
     state = {
@@ -14,7 +15,7 @@ class DistractionScreen extends Component {
                 {title: 'Activities', data: ['Activity 1', 'Activity 2', 'Activity 3', 'Activity 4', 'Activity 5',]},
                 {title: 'Videos', data: ['Video A', 'Video B', 'Video C']},
               ]}
-              renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+              renderItem={({item}) => <ListItem style={styles.item} image={require('../../assets/images/chicken.png')} itemName={item}></ListItem>}
               renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
               keyExtractor={(item, index) => index}
             />
