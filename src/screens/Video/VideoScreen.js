@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Video from 'react-native-video';
 
 class VideoScreen extends Component {
+  // article & code re: using react-native-video: https://hackernoon.com/video-streaming-in-your-react-native-app-feae1c6ae4e2
+  // mp4 video: https://coverr.co/videos/Scrolling%20iPhone%20XR
   render () {
     return (
       <SafeAreaView style={styles.videoContainer}>
