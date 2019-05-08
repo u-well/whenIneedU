@@ -4,9 +4,11 @@ import {Navigation} from 'react-native-navigation';
 
 import Help from './src/screens/Help/Help';
 import Distraction from './src/screens/Distraction/Distraction';
+import VideoScreen from './src/screens/Video/VideoScreen';
 
 Navigation.registerComponent('whenIneedU.Distraction', () => Distraction);
 Navigation.registerComponent('whenIneedU.Help', () => Help);
+Navigation.registerComponent('whenIneedU.Video', () => VideoScreen);
 
 Navigation.events().registerAppLaunchedListener(() => {
   setRoot();
