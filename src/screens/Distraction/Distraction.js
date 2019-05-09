@@ -7,22 +7,40 @@ class DistractionScreen extends Component {
     state = {
     }
 
-    goToVideo = () => {
-        Navigation.push(this.props.componentId, {
-            component: {
-              name: 'whenIneedU.Video',
-              passProps: {
-                text: 'Video'
-              },
-              options: {
-                topBar: {
-                  title: {
-                    text: 'Distraction Video'
+    goToVideo = (title) => {
+        if(title === "Videos"){
+            Navigation.push(this.props.componentId, {
+                component: {
+                  name: 'whenIneedU.Video',
+                  passProps: {
+                    text: 'Video'
+                  },
+                  options: {
+                    topBar: {
+                      title: {
+                        text: 'Distraction Video'
+                      }
+                    }
                   }
                 }
-              }
-            }
-        });
+            });    
+        } 
+        if(title === "Activities") {
+            Navigation.push(this.props.componentId, {
+                component: {
+                  name: 'whenIneedU.Activity',
+                  passProps: {
+                    text: 'Activity'
+                  },
+                  options: {
+                    topBar: {
+                      title: {
+                        text: 'Distraction Activity'
+                      }
+                    }
+                  }
+                }
+            });          }
     }
 
     render () {
@@ -34,7 +52,7 @@ class DistractionScreen extends Component {
                 {title: 'Activities', data: ['Activity 1', 'Activity 2', 'Activity 3', 'Activity 4', 'Activity 5',]},
                 {title: 'Videos', data: ['Video A', 'Video B', 'Video C']},
               ]}
-              renderItem={({item}) => <ListItem style={styles.item} image={require('../../assets/images/chicken.png')} itemName={item} onItemPressed={this.goToVideo}></ListItem>}
+              renderItem={({item, section}) => <ListItem style={styles.item} image={require('../../assets/images/chicken.png')} itemName={item} onItemPressed={() => this.goToVideo(section.title)}></ListItem>}
               renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
               keyExtractor={(item, index) => index}
             />
