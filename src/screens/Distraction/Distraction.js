@@ -26,8 +26,21 @@ class DistractionScreen extends Component {
             });    
         } 
         if(title === "Activities") {
-            console.log("activity not set yet")
-        }
+            Navigation.push(this.props.componentId, {
+                component: {
+                  name: 'whenIneedU.Activity',
+                  passProps: {
+                    text: 'Activity'
+                  },
+                  options: {
+                    topBar: {
+                      title: {
+                        text: 'Distraction Activity'
+                      }
+                    }
+                  }
+                }
+            });          }
     }
 
     render () {
