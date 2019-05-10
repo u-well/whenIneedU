@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import Bubbles from '../../components/Activities/Bubbles';
 
 class ActivityScreen extends Component {
   render () {
     return (
       <SafeAreaView style={styles.activityContainer}>
-        <Text>Placeholder for activity</Text>
+        <Bubbles></Bubbles>
       </SafeAreaView>
     )
   }
