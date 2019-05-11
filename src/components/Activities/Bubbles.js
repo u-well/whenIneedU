@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, Dimensions} from 'react-native';
 import Canvas from 'react-native-canvas';
 
 class Bubbles extends Component {
     // https://codepen.io/hbagency/pen/Nrdbdp
+    // code modified for simplicity and to run in react native.  
+    // TODO: make it prettier (reimplement gradient code) and size for the screen
     handleCanvas = (canvas) => {
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = 'purple';
     
-        var lava0;
+        var lava0
 
         // Point constructor
         var Point = function(x, y) {
@@ -64,7 +66,7 @@ class Bubbles extends Component {
         };
 
         // lavalamp constructor
-        var LavaLamp = function(width, height, numBalls, c0, c1) {
+        var LavaLamp = function(width, height, numBalls) {
             this.step = 5;
             this.width = width;
             this.height = height;
@@ -72,7 +74,6 @@ class Bubbles extends Component {
             this.sx = Math.floor(this.width / this.step);
             this.sy = Math.floor(this.height / this.step);
             this.paint = false;
-            this.metaFill = createRadialGradient(width, height, width, c0, c1);
             this.plx = [0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0];
             this.ply = [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1];
             this.mscases = [0, 3, 0, 3, 1, 3, 0, 3, 2, 2, 0, 2, 1, 1, 0];
@@ -182,8 +183,6 @@ class Bubbles extends Component {
             ctx.beginPath();
             // compute metaballs
             i = 0;
-            //ctx.shadowBlur = 50;
-            //ctx.shadowColor = "green";
             while (ball = this.balls[i++]) {
             // first cell
             var next = [
@@ -204,49 +203,24 @@ class Bubbles extends Component {
             }
         };
 
-        // gradients
-        var createRadialGradient = function(w, h, r, c0, c1) {
-            var gradient = ctx.createRadialGradient(
-            w / 1, h / 1, 0,
-            w / 1, h / 1, r
-            );
-            // gradient.addColorStop(0, c0);
-            // gradient.addColorStop(1, c1);
-            return gradient;
-        };
-
         // main loop
         var run = function() {
             requestAnimationFrame(run);
-            ctx.clearRect(0, 0, 500, 800);
+            ctx.clearRect(0, 0, 400, 400);
             lava0.renderMetaballs();
         };
-        // canvas
-        // var screen = ge1doot.init()
-            // ctx = screen.ctx;
-        // screen.resize();
+
         // create LavaLamps
-        lava0 = new LavaLamp(500, 800, 6, "#FF9298", "#E4008E");
+        lava0 = new LavaLamp(400, 400, 6);
 
         run();
     }
 
     render() {
-
         return (
             <Canvas ref={this.handleCanvas} />
         )
     }
 };
-
-const styles = StyleSheet.create({
-    // wrap: {
-    //     overflow: hidden,
-    //     position: relative,
-    //     height: "100%",
-    //     // backgroundImage: linear-gradient(-206deg, #835EFF 0%, #FF008D 100%)
-    //     backgroundColor: red
-    // }
-})
 
 export default Bubbles;
