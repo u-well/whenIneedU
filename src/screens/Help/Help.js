@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView, Linking} from 'react-native';
 
 class HelpScreen extends Component {
     state = {
+    }
+
+    makeCall = (phoneNumber) => {
+        console.log("phoneNumber: ", phoneNumber);
+        Linking.openURL(`tel:${phoneNumber}`)
     }
 
     render () {
@@ -25,7 +30,7 @@ class HelpScreen extends Component {
                     <Button 
                         title="800-273-TALK (8255)"
                         color="#841584"
-                        // onPress={}
+                        onPress={() => this.makeCall("5555555555")}
                         accessibilityLabel="call the national crisis lifeline"
                     />
                 </View>
