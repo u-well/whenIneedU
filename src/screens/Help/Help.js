@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView, Linking} from 'react-native';
+import axios from 'axios';
 
 class HelpScreen extends Component {
     state = {
@@ -8,6 +9,19 @@ class HelpScreen extends Component {
     makeCall = (phoneNumber) => {
         console.log("phoneNumber: ", phoneNumber);
         Linking.openURL(`tel:${phoneNumber}`)
+    }
+
+    sendText = (phoneNumber) => {
+        axios.post('//api/messages', {
+            toPhone: phoneNumber,
+            fromPhone: process.env.TWILIO_PHONE_NUMBER
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     render () {
@@ -39,7 +53,7 @@ class HelpScreen extends Component {
                     <Button 
                         title="I-need-U-1" 
                         color="#841584"
-                        // onPress={}
+                        onPress={() => this.sendText(process.env.MY_PHONE_NUMBER)}
                         accessibilityLabel="contact your first person"
                     />
                 </View>
