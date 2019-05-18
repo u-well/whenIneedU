@@ -12,9 +12,10 @@ class HelpScreen extends Component {
     }
 
     sendText = (phoneNumber) => {
-        axios.post('//api/messages', {
+        console.log('in sendText with phoneNumber:', phoneNumber)
+        axios.post('http://192.168.1.107:3000/api/messages', {  //replace ip address with your own
             toPhone: phoneNumber,
-            fromPhone: process.env.TWILIO_PHONE_NUMBER
+            fromPhone: process.env.TWILIO_PHONE_NUMBER  // process.env not yet working
           })
           .then(function (response) {
             console.log(response);
@@ -53,7 +54,7 @@ class HelpScreen extends Component {
                     <Button 
                         title="I-need-U-1" 
                         color="#841584"
-                        onPress={() => this.sendText(process.env.MY_PHONE_NUMBER)}
+                        onPress={() => this.sendText(process.env.MY_PHONE_NUMBER)}  // process.env not working now
                         accessibilityLabel="contact your first person"
                     />
                 </View>
