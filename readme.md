@@ -8,6 +8,7 @@ That said, after you've cloned the repo here's some initial steps:
 * Using command line/terminal, navigate to your project root directory.
 * Run `npm install` if you have recently pulled any changes.
 * Be running your emulator (via xcode or android studio) before running the command below.
+* Create a .env file in the project root directory.  Add `TWILIO_PHONE_NUMBER=6515551234` and `MY_PHONE_NUMBER=6125551234` for testing with valid phone #s.  Use the Twilio phone number that sends your texts when you set up an account (also used in backend) and put in your own phone # to receive test texts.  The .env file will be gitignored.
 * Start the app with `react-native run-ios` or `react-native run-android`
 * NOTE: the first time you run one of those commands it takes a long time.  
 * NOTE: Leave open the package launcher terminal window that opens when the process is done.
@@ -19,5 +20,6 @@ That said, after you've cloned the repo here's some initial steps:
 
 ## Proposed React Native Configuration:
 * use wix react-native-navigation v2  https://github.com/wix/react-native-navigation
-* use Fetch API for networking and requests https://facebook.github.io/react-native/docs/network
+* use Fetch API for networking and requests https://facebook.github.io/react-native/docs/network (need to move from axios)
 * recommend using react-devtools and/or react-native-debugger
+* use .env file and react-native-dotenv for environment variables
