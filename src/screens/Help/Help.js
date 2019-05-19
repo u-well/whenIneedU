@@ -10,7 +10,7 @@ class HelpScreen extends Component {
     }
 
     makeCall = (phoneNumber) => {
-        console.log("phoneNumber: ", phoneNumber);
+        console.log("phoneNumber: ", phoneNumber);   // TOOD: remove after testing
         Linking.openURL(`tel:${phoneNumber}`)
     }
 
