@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
+import Home from './src/screens/Home/Home';
 import Help from './src/screens/Help/Help';
 import Distraction from './src/screens/Distraction/Distraction';
 import VideoScreen from './src/screens/Video/VideoScreen';
 import Activity from './src/screens/Activity/Activity';
 
+Navigation.registerComponent('whenIneedU.Home', () => Home);
 Navigation.registerComponent('whenIneedU.Distraction', () => Distraction);
 Navigation.registerComponent('whenIneedU.Help', () => Help);
 Navigation.registerComponent('whenIneedU.Video', () => VideoScreen);
@@ -32,6 +34,31 @@ const setRoot = () => {
       bottomTabs: {
         id: 'BottomTabsId',
         children: [{
+          stack: {
+            children: [{
+              component: {
+                id: 'home',
+                name: 'whenIneedU.Home',
+                passProps: {
+                  text: 'This is tab 0'
+                },
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Home'
+                    }
+                  },
+                  bottomTab: {
+                    text: 'Home',
+                    testID: 'ZERO_TAB_BAR_BUTTON',
+                    icon: require("./src/assets/images/icon.png")
+                  },
+                }
+              }
+            }]
+          } // end stack 0
+        },
+          {
           stack: {
             children: [{
               component: {
