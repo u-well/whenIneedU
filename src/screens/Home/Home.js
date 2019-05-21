@@ -9,8 +9,8 @@ class HomeScreen extends Component {
         return (                
             <View style={styles.container}>
                 <Image
-                    style={{width: 50, height: 50}} 
-                    source={require('../../../src/assets/images/chicken.png')} />   
+                    style={{width: 'auto', height: '100%'}} 
+                    source={require('../../../src/assets/images/cheerios.png')} />   
             </View>
         );
     }
@@ -19,7 +19,7 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 22
+        // paddingTop: 22
     },
 })
 
