@@ -23,3 +23,8 @@ That said, after you've cloned the repo here's some initial steps:
 * use Fetch API for networking and requests https://facebook.github.io/react-native/docs/network (need to move from axios)
 * recommend using react-devtools and/or react-native-debugger
 * use .env file and react-native-dotenv for environment variables
+
+
+## Image Sources:
+* devil horn hands red background  - Image by <a href="https://pixabay.com/users/Mainzer-5900218/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2823831">Olaf Jouaux</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2823831">Pixabay</a>
+
