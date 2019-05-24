@@ -8,9 +8,21 @@ class HomeScreen extends Component {
         const deviceHeight = Dimensions.get('window').height
         const deviceWidth = Dimensions.get('window').width
         const images = [
-            require('../../../src/assets/images/rockHand.jpg'),
-            require('../../../src/assets/images/cheerios.png'),
-            require('../../../src/assets/images/rivers.png'),        
+            { 
+                image: require('../../../src/assets/images/rockHand.jpg'), 
+                text: "Holy shirtballs you're a mother forking rock star!"
+            },
+            {
+                image: require('../../../src/assets/images/bowl.jpg'),
+                text: "I know that you're out of frosted cheerios and that the world is on fire, but you're a forking rockstar.  Get out the door and do that thing!"
+            }, 
+            {
+                image: require('../../../src/assets/images/river-stones.jpg'), 
+                text: "Rivers don't calm me down, they piss me off."
+            }
+        ]
+        const affirmations = [
+
         ]
         let imageArray = [];
         images.forEach((image, i) => {
@@ -18,10 +30,10 @@ class HomeScreen extends Component {
             const thisImage = (
                 <ImageBackground
                     key={`image${i}`}
-                    source={image}
+                    source={image.image}
                     style={{width: deviceWidth}} 
                 >
-                    <Text style={styles.affirmationText}>Holy shirtballs you are a mother forking rock star!</Text>
+                    <Text style={styles.affirmationText}>{image.text}</Text>
                 </ImageBackground>
             )
         imageArray.push(thisImage)
