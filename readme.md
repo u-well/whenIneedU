@@ -28,3 +28,4 @@ That said, after you've cloned the repo here's some initial steps:
 ## Image Sources:
 * devil horn hands red background  - Image by <a href="https://pixabay.com/users/Mainzer-5900218/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2823831">Olaf Jouaux</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2823831">Pixabay</a>
 * bowl - https://pixabay.com/photos/bowl-tableware-food-container-3243264/
+* river-stones - <a href="http://www.peakpx.com/400774/rock-cairn">Peakpx</a> - "Description of this image: equilibrium of white stone near body of water"
