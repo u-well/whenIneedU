@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Dimensions, ScrollView } from 'react-native';
 
 
 class HomeScreen extends Component {
@@ -43,7 +43,6 @@ class HomeScreen extends Component {
 
         let imageArray = [];
         images.forEach((image, i) => {
-            console.log(image, i)
             const thisImage = (
                 <ImageBackground
                     key={`image${i}`}
@@ -56,7 +55,6 @@ class HomeScreen extends Component {
         imageArray.push(thisImage)
         })
 
-        //TODO: placeholder image--replace with dynamic source
         return (                
             <View style={styles.container}>
                 <ScrollView
