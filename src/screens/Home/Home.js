@@ -38,6 +38,18 @@ class HomeScreen extends Component {
                     color: 'yellow',
                     fontStyle: 'italic'
                 }
+            },
+            {
+                image: require('../../../src/assets/images/flame.jpg'), 
+                text: "Self love is hot sauce for your soul.",
+                affirmationText: {
+                    fontSize: 32,
+                    textAlign: 'right',
+                    padding: 20,
+                    color: 'white',
+                    fontStyle: 'italic',
+                    fontWeight: 'bold'
+                }
             }
         ]
 
