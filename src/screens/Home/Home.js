@@ -30,7 +30,7 @@ class HomeScreen extends Component {
             }, 
             {
                 image: require('../../../src/assets/images/river-stones.jpg'), 
-                text: "Rivers don't calm me down, they piss me off.",
+                text: "Rivers don't calm me down, they piss me off",
                 affirmationText: {
                     fontSize: 28,
                     textAlign: 'right',
@@ -41,7 +41,7 @@ class HomeScreen extends Component {
             },
             {
                 image: require('../../../src/assets/images/flame.jpg'), 
-                text: "Self love is hot sauce for your soul.",
+                text: "Self love is hot sauce for your soul",
                 affirmationText: {
                     fontSize: 32,
                     textAlign: 'right',
