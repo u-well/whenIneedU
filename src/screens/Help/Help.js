@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView, Linking} from 'react-native';
+import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView, Linking, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 
 import { MY_PHONE_NUMBER, TWILIO_PHONE_NUMBER } from 'react-native-dotenv';
@@ -7,6 +7,7 @@ import { MY_PHONE_NUMBER, TWILIO_PHONE_NUMBER } from 'react-native-dotenv';
 
 class HelpScreen extends Component {
     state = {
+        location: null
     }
 
     makeCall = (phoneNumber) => {
@@ -27,6 +28,19 @@ class HelpScreen extends Component {
             console.log(error);
           });
     }
+
+    
+    findCoordinates = () => {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const location = JSON.stringify(position);
+    
+            this.setState({ location });
+          },
+            error => Alert.alert(error.message),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
+      };
 
     render () {
 
@@ -79,6 +93,12 @@ class HelpScreen extends Component {
                         accessibilityLabel="contact your third person"
                     />
                 </View>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={this.findCoordinates}>
+                        <Text style={styles.welcome}>Find My Coords?</Text>
+                        <Text>Location: {this.state.location}</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
             </SafeAreaView>
         );
@@ -86,10 +106,21 @@ class HelpScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F5FCFF"
+    },
     header: {
       color: 'black',
       fontWeight: 'bold',
       fontSize: 24,
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: "center",
+        margin: 10
     },
 });
 
