@@ -3,6 +3,7 @@ package com.whenineedu;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -13,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,14 +36,17 @@ public class MainApplication extends NavigationApplication {
     public boolean isDebug() {
         return BuildConfig.DEBUG;
     }
+
     protected List<ReactPackage> getPackages() {
             // Add additional packages you require here
             // No need to add RnnPackage and MainReactPackage
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNNotificationsPackage(),
                     new ReactNativePushNotificationPackage(),
                     new RNCWebViewPackage(),
-                    new ReactVideoPackage()
+                    new ReactVideoPackage(),
+                    new RNNotificationsPackage(MainApplication.this)
             );
         }
 
