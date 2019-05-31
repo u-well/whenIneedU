@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ImageBackground, Dimensions, ScrollView } from 'react-native';
 
-
 class HomeScreen extends Component {
 
     render () {
+
         const deviceHeight = Dimensions.get('window').height
         const deviceWidth = Dimensions.get('window').width
         const images = [
@@ -80,6 +80,7 @@ class HomeScreen extends Component {
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
