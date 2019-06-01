@@ -3,7 +3,7 @@ import {AsyncStorage, View, StyleSheet, ImageBackground, Dimensions, KeyboardAvo
 
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../components/UI/HeadingText/HeadingText';
-import backgroundImage from '../../assets/images/chicken.png';
+import backgroundImage from '../../assets/images/rockPeople.jpg';
 import ButtonWithBackground from '../../components/UI/ButtonWithBackground/ButtonWithBackground';
 import validate from '../../utility/validation';
 import startMainTabs from '../../screens/MainTabs/startMainTabs';
@@ -261,6 +261,8 @@ class AuthScreen extends Component {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value,
         } 
+        // TODO: connect to auth; faking signin for now
+        startMainTabs();
         // this.props.onTryAuth(authData, this.state.authMode);
     }
 
@@ -343,7 +345,7 @@ class AuthScreen extends Component {
         }
 
         return (                
-            <ImageBackground source={require(backgroundImage)} style={styles.backgroundImage}>
+            <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
                 <KeyboardAvoidingView style={styles.container} behavior="padding">
                     {headingText}
                     <ButtonWithBackground 

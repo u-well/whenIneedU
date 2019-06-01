@@ -23,7 +23,7 @@ const startTabs = () => {
                       bottomTab: {
                         text: 'Home',
                         testID: 'ZERO_TAB_BAR_BUTTON',
-                        icon: require("./src/assets/images/icon.png")
+                        icon: require("../../assets/images/icon.png")
                       },
                     }
                   }
@@ -52,7 +52,7 @@ const startTabs = () => {
                   bottomTab: {
                     text: 'Distract Me',
                     testID: 'FIRST_TAB_BAR_BUTTON',
-                    icon: require("./src/assets/images/icon.png")
+                    icon: require("../../assets/images/icon.png")
                   },
                 }
               }
@@ -75,7 +75,7 @@ const startTabs = () => {
                       bottomTab: {
                         text: 'I need U',
                         testID: 'SECOND_TAB_BAR_BUTTON',
-                        icon: require("./src/assets/images/icon.png")
+                        icon: require("../../assets/images/icon.png")
                       },
                     }
                   }
