@@ -8,6 +8,7 @@ import ButtonWithBackground from '../../components/UI/ButtonWithBackground/Butto
 import validate from '../../utility/validation';
 import startMainTabs from '../../screens/MainTabs/startMainTabs';
 import setRoot from '../../../App';
+import authKey from '../../../authKey';
 
 
 // auth reducer code from other project
@@ -34,43 +35,6 @@ import setRoot from '../../../App';
 // 
 // import { uiStartLoading, uiStopLoading} from "./index";
 // import authKey from '../../../authKey';
-
-// export const tryAuth = (authData, authMode) => { 
-//     return dispatch => {
-//         let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey;
-//         dispatch(uiStartLoading());
-//         if(authMode === "signup"){
-//             url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey;
-//         } 
-//         fetch(url, {
-//             method: 'POST',
-//             body: JSON.stringify({
-//                 email: authData.email,
-//                 password: authData.password,
-//                 returnSecureToken: true
-//             }),
-//             headers: {
-//                 "Content-Type": "application/json"
-//             }
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             dispatch(uiStopLoading());
-//             alert("Authentication Failed!  Please try again.");
-//         })
-//         .then(res => res.json())
-//         .then(parsedRes => {
-//             dispatch(uiStopLoading());
-//             console.log(parsedRes);
-//             if(!parsedRes.idToken){
-//                 alert("Authentication Failed!  Please try again.");
-//             } else {
-//                 dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken));
-//                 startMainTabs();
-//             }
-//         })
-//     }
-// };
 
 // export const authSetToken = (token, expiryDate) => {
 //     return {    
@@ -262,8 +226,8 @@ class AuthScreen extends Component {
             password: this.state.controls.password.value,
         } 
         // TODO: connect to auth; faking signin for now
-        startMainTabs();
-        // this.props.onTryAuth(authData, this.state.authMode);
+        this.tryAuth(authData, this.state.authMode);
+        // startMainTabs();
     }
 
     updateInputState = (key, value) => {
@@ -307,6 +271,43 @@ class AuthScreen extends Component {
             }
         })
     }
+
+    tryAuth = (authData, authMode) => { 
+        // return dispatch => {
+            let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey;
+            // dispatch(uiStartLoading());
+            if(authMode === "signup"){
+                url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey;
+            } 
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: authData.email,
+                    password: authData.password,
+                    returnSecureToken: true
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                // dispatch(uiStopLoading());
+                alert("Authentication Failed!  Please try again.");
+            })
+            .then(res => res.json())
+            .then(parsedRes => {
+                // dispatch(uiStopLoading());
+                console.log(parsedRes);
+                if(!parsedRes.idToken){
+                    alert("Authentication Failed!  Please try again.");
+                } else {
+                    // dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken));
+                    startMainTabs();
+                }
+            })
+        // }
+    };
 
     render () {
         var headingText = null;
