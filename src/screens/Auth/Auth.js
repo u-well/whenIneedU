@@ -227,7 +227,6 @@ class AuthScreen extends Component {
         } 
         // TODO: connect to auth; faking signin for now
         this.tryAuth(authData, this.state.authMode);
-        // startMainTabs();
     }
 
     updateInputState = (key, value) => {
@@ -273,9 +272,10 @@ class AuthScreen extends Component {
     }
 
     tryAuth = (authData, authMode) => { 
-        // return dispatch => {
             let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey;
-            // dispatch(uiStartLoading());
+            this.setState({
+                isLoading: true
+            });
             if(authMode === "signup"){
                 url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey;
             } 
@@ -292,12 +292,16 @@ class AuthScreen extends Component {
             })
             .catch(err => {
                 console.log(err);
-                // dispatch(uiStopLoading());
+                this.setState({
+                    isLoading: false
+                });
                 alert("Authentication Failed!  Please try again.");
             })
             .then(res => res.json())
             .then(parsedRes => {
-                // dispatch(uiStopLoading());
+                this.setState({
+                    isLoading: false
+                });
                 console.log(parsedRes);
                 if(!parsedRes.idToken){
                     alert("Authentication Failed!  Please try again.");
