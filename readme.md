@@ -20,7 +20,7 @@ That said, after you've cloned the repo here's some initial steps:
 
 ## Proposed React Native Configuration:
 * use wix react-native-navigation v2  https://github.com/wix/react-native-navigation
-* use Fetch API for networking and requests https://facebook.github.io/react-native/docs/network (need to move from axios)
+* use Fetch API for networking and requests https://facebook.github.io/react-native/docs/network 
 * recommend using react-devtools and/or react-native-debugger
 * use .env file and react-native-dotenv for environment variables
 * use wix react-native-notifications https://github.com/wix/react-native-notifications/ (NOTE: current setup does not include ability to _receive_ push notifications on android; follow setup at https://github.com/wix/react-native-notifications/blob/master/docs/installation.md if this is needed in future)
