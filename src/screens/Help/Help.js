@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, SafeAreaView, Button, StyleSheet, ScrollView, Linking, TouchableOpacity, Alert} from 'react-native';
-import axios from 'axios';
 
 import { MY_PHONE_NUMBER, TWILIO_PHONE_NUMBER } from 'react-native-dotenv';
 
@@ -17,16 +16,22 @@ class HelpScreen extends Component {
 
     sendText = (phoneNumber) => {
         console.log('in sendText with phoneNumber:', phoneNumber)
-        axios.post('http://192.168.1.107:3000/api/messages', {  //replace ip address with your own
-            toPhone: phoneNumber,
-            fromPhone: TWILIO_PHONE_NUMBER || process.env.TWILIO_PHONE_NUMBER  // process.env not yet working
-          })
-          .then(function (response) {
+        fetch('http://192.168.1.107:3000/api/messages', {
+            method: 'POST',
+            body: JSON.stringify({
+                toPhone: phoneNumber,
+                fromPhone: TWILIO_PHONE_NUMBER || process.env.TWILIO_PHONE_NUMBER  // process.env not yet working
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(function (response) {
             console.log(response);
-          })
-          .catch(function (error) {
+        })
+        .catch(function (error) {
             console.log(error);
-          });
+        });
     }
 
     
