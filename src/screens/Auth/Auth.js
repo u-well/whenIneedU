@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AsyncStorage, View, StyleSheet, ImageBackground, Dimensions, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ImageBackground, Dimensions, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ActivityIndicator} from 'react-native';
 
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../components/UI/HeadingText/HeadingText';
@@ -9,152 +9,7 @@ import validate from '../../utility/validation';
 import startMainTabs from '../../screens/MainTabs/startMainTabs';
 import setRoot from '../../../App';
 import authKey from '../../../authKey';
-
-
-// auth reducer code from other project
-// const reducer = (state = initialState, action) => {
-//     switch(action.type) {
-//         case AUTH_SET_TOKEN: 
-//             return {
-//                 ...state,
-//                 token: action.token,
-//                 expiryDate: action.expiryDate
-//             };
-//         case AUTH_REMOVE_TOKEN:
-//             return {
-//                 ...state,
-//                 token: null,
-//                 expiryDate: null
-//             }
-//         default:
-//             return state;
-//     }
-// }
-// 
-// auth action code from other project
-// 
-// import { uiStartLoading, uiStopLoading} from "./index";
-// import authKey from '../../../authKey';
-
-// export const authSetToken = (token, expiryDate) => {
-//     return {    
-//         type: AUTH_SET_TOKEN,
-//         token: token,
-//         expiryDate: expiryDate
-//     }
-// }
-
-// export const authStoreToken = (token, expiresIn, refreshToken) => {
-//     return dispatch => {
-//         const now = new Date();
-//         const expiryDate = now.getTime() + (expiresIn * 1000);
-//         dispatch(authSetToken(token, expiryDate));
-//         AsyncStorage.setItem("ap:auth:token", token);  // can name token any string you want
-//         AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());  
-//         AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);  
-//     }
-// }
-
-// export const authGetToken = () => {
-//     return (dispatch, getState) => {
-//         const promise = new Promise((resolve, reject) => {
-//             const token = getState().auth.token;
-//             const expiryDate = getState().auth.expiryDate;
-//             if (!token || new Date(expiryDate) <= new Date()) {
-//                 let fetchedToken;
-//                 AsyncStorage.getItem("ap:auth:token")
-//                     .catch(err => reject())
-//                     .then(tokenFromStorage => {
-//                         fetchedToken = tokenFromStorage;
-//                         if(!tokenFromStorage){
-//                             reject();
-//                             return;
-//                         }
-//                         return AsyncStorage.getItem("ap:auth:expiryDate");
-//                     })
-//                     .then(expiryDate => {
-//                         const parsedExpiryDate = new Date(parseInt(expiryDate));
-//                         const now = new Date();
-//                         if(parsedExpiryDate > now){
-//                             dispatch(authSetToken(fetchedToken));
-//                             resolve(fetchedToken);    
-//                         } else {
-//                             reject();
-//                         }
-//                     })
-//                     .catch(err =>  reject())
-//             } else {
-//                 resolve(token);
-//             }
-//         });
-//         return promise
-//             .catch(err => {
-//             return AsyncStorage.getItem("ap:auth:refreshToken")
-//                 .then(refreshToken => {
-//                     return fetch("https://securetoken.googleapis.com/v1/token?key="+ authKey, {
-//                         method: 'POST',
-//                         headers: {
-//                             "Content-Type": "application/x-www-form-urlencoded"
-//                         },
-//                         body: "grant_type=refresh_token&refresh_token="+refreshToken,
-//                     })
-//                 })
-//                 .then(res => res.json())
-//                 .then(parsedRes => {
-//                     if(parsedRes.id_token){
-//                         console.log('refresh token saves the day!')
-//                         dispatch(authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token));
-//                         return parsedRes.id_token;  // need to return token so in autoSignin it will trigger startMainTabs()
-//                     } else {
-//                         dispatch(authClearStorage())
-//                     }
-//                 })
-//             })
-//         .then(token => {
-//             if (!token) {
-//                 throw (new Error());
-//             } else {
-//                 return token;
-//             }
-//         })
-//     };
-// };
-
-// export const autoSignin = () => {
-//     return dispatch => {
-//         dispatch(authGetToken())
-//             .then(token => {
-//                 startMainTabs();
-//             })
-//             .catch(err => console.log("Failed to fetch token: ", err));
-//     }
-// }
-
-// export const authClearStorage = () => {
-//     return dispatch => {
-//         AsyncStorage.removeItem("ap:auth:token");
-//         AsyncStorage.removeItem("ap:auth:expiryDate");    
-//         return AsyncStorage.removeItem("ap:auth:refreshToken");    
-//     }
-// }
-
-// export const authLogout = () => {
-//     return dispatch => {
-//         dispatch(authClearStorage())
-//             .then(() => {
-//                 setRoot();
-//             });
-//         dispatch(authRemoveToken());
-//     }
-// }
-
-// export const authRemoveToken = () => {
-//     return {
-//         type: AUTH_REMOVE_TOKEN
-//     };
-// };
-
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class AuthScreen extends Component {
@@ -203,7 +58,7 @@ class AuthScreen extends Component {
 
     componentDidMount = () => {
         // good place to check if user has token
-        // this.onAutoSignIn();
+        this.autoSignIn();
     }
 
     switchAuthModeHandler = () => {
@@ -306,12 +161,113 @@ class AuthScreen extends Component {
                 if(!parsedRes.idToken){
                     alert("Authentication Failed!  Please try again.");
                 } else {
-                    // dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken));
+                    this.authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken);
                     startMainTabs();
                 }
             })
-        // }
     };
+
+    authStoreToken = (token, expiresIn, refreshToken) => {
+        const now = new Date();
+        const expiryDate = now.getTime() + (expiresIn * 1000);
+        this.authSetToken(token, expiryDate);
+        AsyncStorage.setItem("ap:auth:token", token);  // can name token any string you want
+        AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());  
+        AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);  
+    }
+
+    authSetToken = (token, expiryDate) => {
+        this.setState({
+            token: token,
+            expiryDate: expiryDate   
+        })
+    }
+
+    autoSignIn = () => {
+        this.authGetToken()
+            .then(token => {
+                startMainTabs();
+            })
+            .catch(err => console.log("Failed to fetch token: ", err));
+    }
+
+    authGetToken = () => {
+        const promise = new Promise((resolve, reject) => {
+            const token = this.state.auth.token;
+            const expiryDate = this.state.auth.expiryDate;
+            if (!token || new Date(expiryDate) <= new Date()) {
+                let fetchedToken;
+                AsyncStorage.getItem("ap:auth:token")
+                    .catch(err => reject())
+                    .then(tokenFromStorage => {
+                        fetchedToken = tokenFromStorage;
+                        if(!tokenFromStorage){
+                            reject();
+                            return;
+                        }
+                        return AsyncStorage.getItem("ap:auth:expiryDate");
+                    })
+                    .then(expiryDate => {
+                        const parsedExpiryDate = new Date(parseInt(expiryDate));
+                        const now = new Date();
+                        if(parsedExpiryDate > now){
+                            this.authSetToken(fetchedToken);
+                            resolve(fetchedToken);    
+                        } else {
+                            reject();
+                        }
+                    })
+                    .catch(err =>  reject())
+            } else {
+                resolve(token);
+            }
+        });
+        return promise
+            .catch(err => {
+            return AsyncStorage.getItem("ap:auth:refreshToken")
+                .then(refreshToken => {
+                    return fetch("https://securetoken.googleapis.com/v1/token?key="+ authKey, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: "grant_type=refresh_token&refresh_token="+refreshToken,
+                    })
+                })
+                .then(res => res.json())
+                .then(parsedRes => {
+                    if(parsedRes.id_token){
+                        console.log('refresh token saves the day!')
+                        this.authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token);
+                        return parsedRes.id_token;  // need to return token so in autoSignin it will trigger startMainTabs()
+                    } else {
+                        this.authClearStorage();
+                    }
+                })
+            })
+        .then(token => {
+            if (!token) {
+                throw (new Error());
+            } else {
+                return token;
+            }
+        })
+    };
+
+    authClearStorage = () => {
+        AsyncStorage.removeItem("ap:auth:token");
+        AsyncStorage.removeItem("ap:auth:expiryDate");    
+        return AsyncStorage.removeItem("ap:auth:refreshToken");    
+    }
+
+    authLogout = () => {
+        this.authClearStorage()
+            .then(() => {
+                setRoot();
+            });
+        this.authRemoveToken();
+    }
+
 
     render () {
         var headingText = null;

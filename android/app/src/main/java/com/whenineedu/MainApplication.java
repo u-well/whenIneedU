@@ -3,6 +3,7 @@ package com.whenineedu;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -42,6 +43,7 @@ public class MainApplication extends NavigationApplication {
             // No need to add RnnPackage and MainReactPackage
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new AsyncStoragePackage(),
             new RNNotificationsPackage(),
                     new ReactNativePushNotificationPackage(),
                     new RNCWebViewPackage(),
