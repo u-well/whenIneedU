@@ -186,6 +186,7 @@ class AuthScreen extends Component {
     autoSignIn = () => {
         this.authGetToken()
             .then(token => {
+                console.log("auto signin with token: ", token)
                 startMainTabs();
             })
             .catch(err => console.log("Failed to fetch token: ", err));
@@ -226,12 +227,12 @@ class AuthScreen extends Component {
             .catch(err => {
             return AsyncStorage.getItem("ap:auth:refreshToken")
                 .then(refreshToken => {
-                    return fetch("https://securetoken.googleapis.com/v1/token?key="+ authKey, {
+                    return fetch("https://securetoken.googleapis.com/v1/token?key=" + authKey, {
                         method: 'POST',
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
                         },
-                        body: "grant_type=refresh_token&refresh_token="+refreshToken,
+                        body: "grant_type=refresh_token&refresh_token=" + refreshToken,
                     })
                 })
                 .then(res => res.json())
@@ -383,12 +384,5 @@ const styles = StyleSheet.create({
     }
 });
 
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onTryAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode)),
-//         onAutoSignIn: () => dispatch(autoSignin())
-//     };
-// };
 
 export default AuthScreen;
