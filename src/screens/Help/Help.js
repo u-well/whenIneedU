@@ -16,7 +16,7 @@ class HelpScreen extends Component {
 
     sendText = (phoneNumber) => {
         console.log('in sendText with phoneNumber:', phoneNumber)
-        fetch('http://192.168.1.107:3000/api/messages', {
+        fetch('http://192.168.1.107:3000/api/messages', {  // TODO: replace with deploy url
             method: 'POST',
             body: JSON.stringify({
                 toPhone: phoneNumber,
