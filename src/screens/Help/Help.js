@@ -10,7 +10,7 @@ class HelpScreen extends Component {
     }
 
     makeCall = (phoneNumber) => {
-        console.log("phoneNumber: ", phoneNumber);   // TOOD: remove after testing
+        console.log("phoneNumber: ", phoneNumber);   // TODO: remove after testing
         Linking.openURL(`tel:${phoneNumber}`)
     }
 
@@ -20,7 +20,8 @@ class HelpScreen extends Component {
             method: 'POST',
             body: JSON.stringify({
                 toPhone: phoneNumber,
-                fromPhone: TWILIO_PHONE_NUMBER || process.env.TWILIO_PHONE_NUMBER  // process.env not yet working
+                fromPhone: TWILIO_PHONE_NUMBER || process.env.TWILIO_PHONE_NUMBER,  // process.env not yet working
+                message: "Your friend needs you.  Please reach out soon."
             }),
             headers: {
                 "Content-Type": "application/json"
