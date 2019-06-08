@@ -114,11 +114,6 @@ class HomeScreen extends Component {
             console.log(parsedRes);
             const images = [];
             for (let key in parsedRes) {
-                if(key==0){
-                    continue;
-                }
-                console.log("image in parsedRes loop",parsedRes[key].image)
-                console.log(typeof parsedRes[key].image)
                 images.push(
                     parsedRes[key]
                 )
@@ -137,55 +132,10 @@ class HomeScreen extends Component {
 
         const deviceHeight = Dimensions.get('window').height
         const deviceWidth = Dimensions.get('window').width
-        // const images = [
-        //     { 
-        //         image: require('../../../src/assets/images/rockHand.jpg'), 
-        //         text: "Holy shirtballs you're a mother forking rock star!",
-        //         affirmationText: {
-        //             fontSize: 36,
-        //             fontWeight: 'bold',
-        //             textAlign: 'right',
-        //             padding: 20
-        //         }
-        //     },
-        //     {
-        //         image: require('../../../src/assets/images/bowl.jpg'),
-        //         text: "I know that you're out of frosted cheerios and that the world is on fire, but you're a forking rockstar.  Get out the door and do that thing!",
-        //         affirmationText: {
-        //             fontSize: 24,
-        //             fontWeight: 'bold',
-        //             textAlign: 'center',
-        //             padding: 20
-        //         }
-        //     }, 
-        //     {
-        //         image: require('../../../src/assets/images/river-stones.jpg'), 
-        //         text: "Rivers don't calm me down, they piss me off",
-        //         affirmationText: {
-        //             fontSize: 28,
-        //             textAlign: 'right',
-        //             padding: 20,
-        //             color: 'yellow',
-        //             fontStyle: 'italic'
-        //         }
-        //     },
-        //     {
-        //         image: require('../../../src/assets/images/flame.jpg'), 
-        //         text: "Self love is hot sauce for your soul",
-        //         affirmationText: {
-        //             fontSize: 32,
-        //             textAlign: 'right',
-        //             padding: 20,
-        //             color: 'white',
-        //             fontStyle: 'italic',
-        //             fontWeight: 'bold'
-        //         }
-        //     }
-        // ]
 
         let imageArray = [];
         this.state.images.forEach((image, i) => {
-            // console.log(`''${image.image}''`)
+            console.log(image.affirmationText)
             const thisImage = (
                 <ImageBackground
                     key={`image${i}`}
