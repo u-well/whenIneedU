@@ -52,7 +52,7 @@ class DistractionScreen extends Component {
                 {title: 'Activities', data: ['Activity 1', 'Activity 2', 'Activity 3', 'Activity 4', 'Activity 5',]},
                 {title: 'Videos', data: ['Video A', 'Video B', 'Video C']},
               ]}
-              renderItem={({item, section}) => <ListItem style={styles.item} image={require('../../assets/images/chicken.png')} itemName={item} onItemPressed={() => this.goToVideo(section.title)}></ListItem>}
+              renderItem={({item, section}) => <ListItem style={styles.item} image={section.title=='Activities' ? require('../../assets/images/chicken.png') : require('../../assets/images/rockPeople.jpg')} itemName={item} onItemPressed={() => this.goToVideo(section.title)}></ListItem>}
               renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
               keyExtractor={(item, index) => index}
             />
