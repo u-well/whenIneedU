@@ -130,8 +130,8 @@ class HomeScreen extends Component {
 
     render () {
 
-        const deviceHeight = Dimensions.get('window').height
-        const deviceWidth = Dimensions.get('window').width
+        const deviceHeight = Dimensions.get('window').height;
+        const deviceWidth = Dimensions.get('window').width;
 
         let imageArray = [];
         this.state.images.forEach((image, i) => {
@@ -144,8 +144,8 @@ class HomeScreen extends Component {
                 >
                     <Text style={image.affirmationText}>{image.text}</Text>
                 </ImageBackground>
-            )
-        imageArray.push(thisImage)
+            );
+        imageArray.push(thisImage);
         })
 
         return (                
