@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, ImageBackground, Dimensions, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ActivityIndicator} from 'react-native';
+import { connect } from 'react-redux';
 
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import HeadingText from '../../components/UI/HeadingText/HeadingText';
@@ -11,11 +12,10 @@ import setRoot from '../../../App';
 import authKey from '../../../authKey';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { tryAuth, autoSignin } from '../../store/actions/index';
 
 class AuthScreen extends Component {
     state = {
-        token: null,
-        expiryDate: null,
         viewMode: Dimensions.get('window').height > 500 ? "portrait" : "landscape",
         authMode: "login",
         controls: {
@@ -44,7 +44,6 @@ class AuthScreen extends Component {
                 touched: false
             },
         },
-        isLoading: false
     }
 
     constructor(props){
@@ -58,7 +57,7 @@ class AuthScreen extends Component {
 
     componentDidMount = () => {
         // good place to check if user has token
-        this.autoSignIn();
+        this.props.onAutoSignIn();
     }
 
     switchAuthModeHandler = () => {
@@ -81,7 +80,7 @@ class AuthScreen extends Component {
             password: this.state.controls.password.value,
         } 
         // TODO: connect to auth; faking signin for now
-        this.tryAuth(authData, this.state.authMode);
+        this.props.onTryAuth(authData, this.state.authMode);
     }
 
     updateInputState = (key, value) => {
@@ -126,148 +125,148 @@ class AuthScreen extends Component {
         })
     }
 
-    tryAuth = (authData, authMode) => { 
-            let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey;
-            this.setState({
-                isLoading: true
-            });
-            if(authMode === "signup"){
-                url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey;
-            } 
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: authData.email,
-                    password: authData.password,
-                    returnSecureToken: true
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                this.setState({
-                    isLoading: false
-                });
-                alert("Authentication Failed!  Please try again.");
-            })
-            .then(res => res.json())
-            .then(parsedRes => {
-                this.setState({
-                    isLoading: false
-                });
-                console.log(parsedRes);
-                if(!parsedRes.idToken){
-                    alert("Authentication Failed!  Please try again.");
-                } else {
-                    this.authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken);
-                    startMainTabs();
-                }
-            })
-    };
+    // tryAuth = (authData, authMode) => { 
+    //         let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + authKey;
+    //         this.setState({
+    //             isLoading: true
+    //         });
+    //         if(authMode === "signup"){
+    //             url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + authKey;
+    //         } 
+    //         fetch(url, {
+    //             method: 'POST',
+    //             body: JSON.stringify({
+    //                 email: authData.email,
+    //                 password: authData.password,
+    //                 returnSecureToken: true
+    //             }),
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             this.setState({
+    //                 isLoading: false
+    //             });
+    //             alert("Authentication Failed!  Please try again.");
+    //         })
+    //         .then(res => res.json())
+    //         .then(parsedRes => {
+    //             this.setState({
+    //                 isLoading: false
+    //             });
+    //             console.log(parsedRes);
+    //             if(!parsedRes.idToken){
+    //                 alert("Authentication Failed!  Please try again.");
+    //             } else {
+    //                 this.authStoreToken(parsedRes.idToken, parsedRes.expiresIn, parsedRes.refreshToken);
+    //                 startMainTabs();
+    //             }
+    //         })
+    // };
 
-    authStoreToken = (token, expiresIn, refreshToken) => {
-        const now = new Date();
-        const expiryDate = now.getTime() + (expiresIn * 1000);
-        this.authSetToken(token, expiryDate);
-        AsyncStorage.setItem("ap:auth:token", token);  // can name token any string you want
-        AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());  
-        AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);  
-    }
+    // authStoreToken = (token, expiresIn, refreshToken) => {
+    //     const now = new Date();
+    //     const expiryDate = now.getTime() + (expiresIn * 1000);
+    //     this.authSetToken(token, expiryDate);
+    //     AsyncStorage.setItem("ap:auth:token", token);  // can name token any string you want
+    //     AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());  
+    //     AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);  
+    // }
 
-    authSetToken = (token, expiryDate) => {
-        this.setState({
-            token: token,
-            expiryDate: expiryDate   
-        })
-    }
+    // authSetToken = (token, expiryDate) => {
+    //     this.setState({
+    //         token: token,
+    //         expiryDate: expiryDate   
+    //     })
+    // }
 
-    autoSignIn = () => {
-        this.authGetToken()
-            .then(token => {
-                console.log("auto signin with token: ", token)
-                startMainTabs();
-            })
-            .catch(err => console.log("Failed to fetch token: ", err));
-    }
+    // autoSignIn = () => {
+    //     this.authGetToken()
+    //         .then(token => {
+    //             console.log("auto signin with token: ", token)
+    //             startMainTabs();
+    //         })
+    //         .catch(err => console.log("Failed to fetch token: ", err));
+    // }
 
-    authGetToken = () => {
-        const promise = new Promise((resolve, reject) => {
-            const token = this.state.auth.token;
-            const expiryDate = this.state.auth.expiryDate;
-            if (!token || new Date(expiryDate) <= new Date()) {
-                let fetchedToken;
-                AsyncStorage.getItem("ap:auth:token")
-                    .catch(err => reject())
-                    .then(tokenFromStorage => {
-                        fetchedToken = tokenFromStorage;
-                        if(!tokenFromStorage){
-                            reject();
-                            return;
-                        }
-                        return AsyncStorage.getItem("ap:auth:expiryDate");
-                    })
-                    .then(expiryDate => {
-                        const parsedExpiryDate = new Date(parseInt(expiryDate));
-                        const now = new Date();
-                        if(parsedExpiryDate > now){
-                            this.authSetToken(fetchedToken);
-                            resolve(fetchedToken);    
-                        } else {
-                            reject();
-                        }
-                    })
-                    .catch(err =>  reject())
-            } else {
-                resolve(token);
-            }
-        });
-        return promise
-            .catch(err => {
-            return AsyncStorage.getItem("ap:auth:refreshToken")
-                .then(refreshToken => {
-                    return fetch("https://securetoken.googleapis.com/v1/token?key=" + authKey, {
-                        method: 'POST',
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: "grant_type=refresh_token&refresh_token=" + refreshToken,
-                    })
-                })
-                .then(res => res.json())
-                .then(parsedRes => {
-                    if(parsedRes.id_token){
-                        console.log('refresh token saves the day!')
-                        this.authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token);
-                        return parsedRes.id_token;  // need to return token so in autoSignin it will trigger startMainTabs()
-                    } else {
-                        this.authClearStorage();
-                    }
-                })
-            })
-        .then(token => {
-            if (!token) {
-                throw (new Error());
-            } else {
-                return token;
-            }
-        })
-    };
+    // authGetToken = () => {
+    //     const promise = new Promise((resolve, reject) => {
+    //         const token = this.state.auth.token;
+    //         const expiryDate = this.state.auth.expiryDate;
+    //         if (!token || new Date(expiryDate) <= new Date()) {
+    //             let fetchedToken;
+    //             AsyncStorage.getItem("ap:auth:token")
+    //                 .catch(err => reject())
+    //                 .then(tokenFromStorage => {
+    //                     fetchedToken = tokenFromStorage;
+    //                     if(!tokenFromStorage){
+    //                         reject();
+    //                         return;
+    //                     }
+    //                     return AsyncStorage.getItem("ap:auth:expiryDate");
+    //                 })
+    //                 .then(expiryDate => {
+    //                     const parsedExpiryDate = new Date(parseInt(expiryDate));
+    //                     const now = new Date();
+    //                     if(parsedExpiryDate > now){
+    //                         this.authSetToken(fetchedToken);
+    //                         resolve(fetchedToken);    
+    //                     } else {
+    //                         reject();
+    //                     }
+    //                 })
+    //                 .catch(err =>  reject())
+    //         } else {
+    //             resolve(token);
+    //         }
+    //     });
+    //     return promise
+    //         .catch(err => {
+    //         return AsyncStorage.getItem("ap:auth:refreshToken")
+    //             .then(refreshToken => {
+    //                 return fetch("https://securetoken.googleapis.com/v1/token?key=" + authKey, {
+    //                     method: 'POST',
+    //                     headers: {
+    //                         "Content-Type": "application/x-www-form-urlencoded"
+    //                     },
+    //                     body: "grant_type=refresh_token&refresh_token=" + refreshToken,
+    //                 })
+    //             })
+    //             .then(res => res.json())
+    //             .then(parsedRes => {
+    //                 if(parsedRes.id_token){
+    //                     console.log('refresh token saves the day!')
+    //                     this.authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token);
+    //                     return parsedRes.id_token;  // need to return token so in autoSignin it will trigger startMainTabs()
+    //                 } else {
+    //                     this.authClearStorage();
+    //                 }
+    //             })
+    //         })
+    //     .then(token => {
+    //         if (!token) {
+    //             throw (new Error());
+    //         } else {
+    //             return token;
+    //         }
+    //     })
+    // };
 
-    authClearStorage = () => {
-        AsyncStorage.removeItem("ap:auth:token");
-        AsyncStorage.removeItem("ap:auth:expiryDate");    
-        return AsyncStorage.removeItem("ap:auth:refreshToken");    
-    }
+    // authClearStorage = () => {
+    //     AsyncStorage.removeItem("ap:auth:token");
+    //     AsyncStorage.removeItem("ap:auth:expiryDate");    
+    //     return AsyncStorage.removeItem("ap:auth:refreshToken");    
+    // }
 
-    authLogout = () => {
-        this.authClearStorage()
-            .then(() => {
-                setRoot();
-            });
-        this.authRemoveToken();
-    }
+    // authLogout = () => {
+    //     this.authClearStorage()
+    //         .then(() => {
+    //             setRoot();
+    //         });
+    //     this.authRemoveToken();
+    // }
 
 
     render () {
@@ -302,7 +301,7 @@ class AuthScreen extends Component {
             );
         }
 
-        if(this.state.isLoading) {
+        if(this.props.isLoading) {
             submmitButton = <ActivityIndicator />
         }
 
@@ -384,5 +383,17 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ui.isLoading,
+     }
+}
 
-export default AuthScreen;
+const mapDispatchToProps = dispatch => {
+    return {
+        onTryAuth: (authData, authMode) => dispatch(tryAuth(authData, authMode)),
+        onAutoSignIn: () => dispatch(autoSignin())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

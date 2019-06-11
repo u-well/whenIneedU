@@ -4,8 +4,6 @@ import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from './actionTypes';
 import { uiStartLoading, uiStopLoading} from "./index";
 import startMainTabs from '../../screens/MainTabs/startMainTabs';
 import authKey from '../../../authKey';
-// import App from '../../../App';
-// import { Navigation } from 'react-native-navigation';
 import setRoot from '../../../App';
 
 export const tryAuth = (authData, authMode) => { 

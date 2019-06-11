@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import { Provider } from 'react-redux';
 
 import Home from './src/screens/Home/Home';
 import Help from './src/screens/Help/Help';
@@ -9,12 +10,16 @@ import VideoScreen from './src/screens/Video/VideoScreen';
 import Activity from './src/screens/Activity/Activity';
 import Auth from './src/screens/Auth/Auth';
 
-Navigation.registerComponent('whenIneedU.Home', () => Home);
-Navigation.registerComponent('whenIneedU.Distraction', () => Distraction);
-Navigation.registerComponent('whenIneedU.Help', () => Help);
-Navigation.registerComponent('whenIneedU.Video', () => VideoScreen);
-Navigation.registerComponent('whenIneedU.Activity', () => Activity);
-Navigation.registerComponent('whenIneedU.AuthScreen', () => Auth);
+import configureStore from './src/store/configureStore';
+
+const store = configureStore();
+
+Navigation.registerComponentWithRedux('whenIneedU.Home', () => Home, Provider, store);
+Navigation.registerComponentWithRedux('whenIneedU.Distraction', () => Distraction, Provider, store);
+Navigation.registerComponentWithRedux('whenIneedU.Help', () => Help, Provider, store);
+Navigation.registerComponentWithRedux('whenIneedU.Video', () => VideoScreen, Provider, store);
+Navigation.registerComponentWithRedux('whenIneedU.Activity', () => Activity, Provider, store);
+Navigation.registerComponentWithRedux('whenIneedU.AuthScreen', () => Auth, Provider, store);
 
 Navigation.events().registerAppLaunchedListener(() => {
   setRoot();
