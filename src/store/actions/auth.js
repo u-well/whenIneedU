@@ -1,10 +1,11 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from './actionTypes';
 import { uiStartLoading, uiStopLoading} from "./index";
 import startMainTabs from '../../screens/MainTabs/startMainTabs';
 import authKey from '../../../authKey';
 import setRoot from '../../../App';
+
 
 export const tryAuth = (authData, authMode) => { 
     return dispatch => {
