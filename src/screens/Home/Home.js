@@ -8,13 +8,30 @@ class HomeScreen extends Component {
     // https://whenineedu-7bf72.firebaseio.com/
 
     state = {
+        viewMode: Dimensions.get('window').height > 500 ? "portrait" : "landscape",
         images: [],
         token: null,
         expiryDate: null  
     }
+    
+    constructor(props){
+        super(props);
+        Dimensions.addEventListener("change", this.updateViewModel);
+    };
+
     componentDidMount () {
         this.getAffirmations();
     }
+
+    componentWillUnmount = () => {
+        Dimensions.removeEventListener("change", this.updateViewModel);
+    }
+
+    updateViewModel = (dims) => {
+        this.setState({
+            viewMode: dims.window.height > 500 ? "portrait" : "landscape"
+        });
+    };
 
     getAffirmations = () => { 
         this.props.onAuthGetToken()
