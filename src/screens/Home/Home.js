@@ -67,7 +67,6 @@ class HomeScreen extends Component {
 
         let imageArray = [];
         this.state.images.forEach((image, i) => {
-            console.log(image.affirmationText)
             const thisImage = (
                 <ImageBackground
                     key={`image${i}`}
