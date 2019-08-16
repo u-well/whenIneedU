@@ -32,3 +32,8 @@ That said, after you've cloned the repo here's some initial steps:
 * river-stones - <a href="http://www.peakpx.com/400774/rock-cairn">Peakpx</a> - "Description of this image: equilibrium of white stone near body of water"
 * fire - Image by <a href="https://pixabay.com/users/Skitterphoto-324082/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=726268">Rudy and Peter Skitterians</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=726268">Pixabay</a>
 * rock people - Image by <a href="https://pixabay.com/users/Wokandapix-614097/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1771913">Wokandapix</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1771913">Pixabay</a>
+
+
+
+## TODO:
+* add way to logout so token in asyncStorage is cleared.  currently once you log in you always have a token in asyncStorage so in order to go through the login process again you have to uninstall the app from your device or simulator.  as of now, the program never calls authLogout or authClearStorage anywhere else in code.  (8/15/19 - Neota)
